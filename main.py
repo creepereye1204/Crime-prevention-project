@@ -13,11 +13,10 @@ for image_path in known_person_images:
     encoding = face_recognition.face_encodings(image)[0]
     known_faces.append(encoding)
 
-# MediaPipe 얼굴 탐지 및 포즈 객체 초기화
+# MediaPipe 얼굴 탐지 객체 초기화
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose()
+
 
 #  영상 읽기
 cap = cv2.VideoCapture(0) # 0은 노트북의 웹캠 캠이 없으면 안드로이드 기준 DroidCam 앱설치후 URL 입력
@@ -38,8 +37,7 @@ with mp_face_detection.FaceDetection(
         # 얼굴 탐지
         results = face_detection.process(image_rgb)
 
-        # 포즈 탐지
-        pose_results = pose.process(image_rgb)
+       
 
         # 얼굴 인식 및 표시
         if results.detections:
@@ -65,12 +63,6 @@ with mp_face_detection.FaceDetection(
                         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
                         cv2.putText(image, "Unknown", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-        # 포즈 랜드마크 표시
-        if pose_results.pose_landmarks:
-            mp_drawing.draw_landmarks(image, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
-        # 결과 영상을 파일로 저장
-        # out.write(image)
 
         # 결과 영상 표시
         cv2.imshow('Face and Pose Recognition', image)
