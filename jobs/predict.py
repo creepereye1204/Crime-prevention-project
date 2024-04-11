@@ -29,15 +29,18 @@ def recognize_faces_in_video():
                 current_face_encoding = resnet(face.unsqueeze(0).to(device))
 
                 # 가장 작은 거리 찾기
-                distances = [(current_face_encoding - known_face).norm().item() for known_face in known_face_encodings]
+                distances = [(current_face_encoding - known_face.encoding).norm().item() for known_face in known_faces]
                 min_distance = min(distances)
                 name_index = distances.index(min_distance)
 
                 if min_distance < 1:  # 예시 임계값
-                    label = known_face_names[name_index]
+                    name = known_faces[name_index].name
+                    age = known_faces[name_index].age
+                    gender = known_faces[name_index].gender
+                    description = known_faces[name_index].description
                     color = (0, 255, 0)  # 초록색
                 else:
-                    label = "Unknown"
+                    name = "Unknown"
                     color = (0, 0, 255)  # 빨간색
 
                 cv2.rectangle(image, (x, y), (w, h), color, 2)

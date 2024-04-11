@@ -5,7 +5,8 @@ from app.src.middleware.settings import *
 from starlette.responses import RedirectResponse
 import uvicorn
 import threading
-
+from dataset.schema import *
+from middleware.settings import *
 
 @app.get('/')
 async def root(request: Request):
@@ -34,6 +35,17 @@ async def auth(request: Request):
     if user:
         request.session['user'] = dict(user)
     return templates.TemplateResponse('wellcome.html',{'request':request,'user':dict(user)})
+
+
+
+@app.get("/criminal")
+async def criminal():
+    global known_face_encodings
+    print(known_face_encodings)
+    return known_face_encodings
+
+
+
 
 
 @app.get("/video")
