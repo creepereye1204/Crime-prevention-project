@@ -33,14 +33,14 @@ templates = Jinja2Templates(directory="templates")
 
 
 
-engine = create_engine(URL)
+engine = create_engine(URL,encoding='utf8')
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
 
+criminals=session.query(CriminalDao).all()
 
 
-
-known_faces = load_known_faces()
+known_faces = load_known_faces(criminals)

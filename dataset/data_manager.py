@@ -5,18 +5,14 @@ from app.src.models.database import *
 from app.src.dataset.schema import *
 from pydantic import parse_obj_as
 
-def load_known_faces():
-    criminals = session.query(CriminalDao).all()
+def load_known_faces(criminals):
 
 
     known_face_encodings=[]
 
-
-
-
     for criminal in criminals:
-        img = Image.open("resource/"+criminal.image_path)
-        face_encoding = mtcnn(img)
-        face_encoding = resnet(face_encoding.to(device))
-        known_face_encodings.append(face_encoding)
+        known_face_encodings.append(Criminal(name=criminal.name,age=criminal.age
+                                             ,description=criminal.description,
+                                             gender=criminal.gender,image=criminal.image))
+
     return known_face_encodings

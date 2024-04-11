@@ -35,16 +35,16 @@ def recognize_faces_in_video():
 
                 if min_distance < 1:  # 예시 임계값
                     name = known_faces[name_index].name
-                    age = known_faces[name_index].age
-                    gender = known_faces[name_index].gender
-                    description = known_faces[name_index].description
+                    # age = known_faces[name_index].age
+                    # gender = known_faces[name_index].gender
+                    # description = known_faces[name_index].description
                     color = (0, 255, 0)  # 초록색
                 else:
                     name = "Unknown"
                     color = (0, 0, 255)  # 빨간색
 
                 cv2.rectangle(image, (x, y), (w, h), color, 2)
-                cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                cv2.putText(image, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
         with frame_lock:
             latest_frame = image

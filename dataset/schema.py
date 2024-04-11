@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from PIL import Image
 from app.src.models.models import *
-from data_manager import *
+
 class CriminalDto(BaseModel):
     name: str=None
     age: int =None
