@@ -38,9 +38,9 @@ Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
+session=session.query(CriminalDao)
 
-
-criminals=session.query(CriminalDao).all()
+criminals=session.all()
 
 
 known_faces = load_known_faces(criminals)

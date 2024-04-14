@@ -1,4 +1,4 @@
-from fastapi import Request
+from fastapi import Request,HTTPException
 from fastapi.responses import StreamingResponse
 from jobs.predict import *
 from app.src.middleware.settings import *
@@ -7,6 +7,9 @@ import uvicorn
 import threading
 from dataset.schema import *
 from middleware.settings import *
+from dataset.database import *
+from fastapi import FastAPI, File, UploadFile, Form
+
 
 @app.get('/')
 async def root(request: Request):
@@ -40,9 +43,24 @@ async def auth(request: Request):
 
 @app.get("/criminal")
 async def criminal():
-    global known_face_encodings
-    print(known_face_encodings)
-    return known_face_encodings
+    pass
+
+@app.post("/criminal/add")
+async def add_criminal(
+    name: str = Form(...),
+    age: int = Form(...),
+    gender: bool = Form(...),
+    description: str = Form(...),
+    image: UploadFile = File(...)
+    ):
+    try:
+        img = Image.open(image.file)
+        img.verify()  # 이미지 파일인지 확인
+    except (IOError, SyntaxError) as e:
+        raise HTTPException(status_code=400, detail="Uploaded file is not a valid image")
+    
+    구현 ㄱㄱㄱ utils파일 함수 이름 변경 ㄱ
+
 
 
 

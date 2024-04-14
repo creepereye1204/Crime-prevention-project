@@ -1,12 +1,9 @@
-from pydantic import BaseModel
 from PIL import Image
 from app.src.models.models import *
+from fastapi import File, UploadFile
 
-class CriminalDto(BaseModel):
-    name: str=None
-    age: int =None
-    gender: bool=None
-    description: str = None
+
+
 
 class Criminal():
     def __init__(self, name: str=None, age: int=None, gender: bool=None, description:str=None,image: str=None):
