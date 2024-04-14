@@ -2,9 +2,14 @@ from app.src.dataset.data_manager import *
 from starlette.templating import Jinja2Templates
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.src.middleware.config import *
 from authlib.integrations.starlette_client import OAuth,OAuthError
 from starlette.middleware.sessions import SessionMiddleware
+
+
+from app.src.middleware.config import *
+from app.src.models.database import *
+
+
 
 
 app = FastAPI()
@@ -28,8 +33,14 @@ templates = Jinja2Templates(directory="templates")
 
 
 
+engine = create_engine(URL,encoding='utf8')
+Base.metadata.create_all(engine)
 
-# 예시로 두 사람의 얼굴을 등록
-person_images = ["Elon Reeve Musk.jpg"]
-known_face_names = ["Elon Reeve Musk"]
-known_face_encodings = load_known_faces(person_images)
+Session = sessionmaker(bind=engine)
+session = Session()
+session=session.query(CriminalDao)
+
+criminals=session.all()
+
+
+known_faces = load_known_faces(criminals)

@@ -1,12 +1,18 @@
-from PIL import Image
+
 from app.src.models.models import *
 from app.src.middleware.settings import *
+from app.src.models.database import *
+from app.src.dataset.schema import *
+from pydantic import parse_obj_as
 
-def load_known_faces(person_images):
+def load_known_faces(criminals):
+
+
     known_face_encodings=[]
-    for person_image in person_images:
-        img = Image.open("resource/"+person_image)
-        face_encoding = mtcnn(img)
-        face_encoding = resnet(face_encoding.to(device))
-        known_face_encodings.append(face_encoding)
+
+    for criminal in criminals:
+        known_face_encodings.append(Criminal(name=criminal.name,age=criminal.age
+                                             ,description=criminal.description,
+                                             gender=criminal.gender,image=criminal.image))
+
     return known_face_encodings

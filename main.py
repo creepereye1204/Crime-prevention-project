@@ -1,10 +1,14 @@
-from fastapi import Request
+from fastapi import Request,HTTPException
 from fastapi.responses import StreamingResponse
 from jobs.predict import *
 from app.src.middleware.settings import *
 from starlette.responses import RedirectResponse
 import uvicorn
 import threading
+from dataset.schema import *
+from middleware.settings import *
+from dataset.database import *
+from fastapi import FastAPI, File, UploadFile, Form
 
 
 @app.get('/')
@@ -34,6 +38,32 @@ async def auth(request: Request):
     if user:
         request.session['user'] = dict(user)
     return templates.TemplateResponse('wellcome.html',{'request':request,'user':dict(user)})
+
+
+
+@app.get("/criminal")
+async def criminal():
+    pass
+
+@app.post("/criminal/add")
+async def add_criminal(
+    name: str = Form(...),
+    age: int = Form(...),
+    gender: bool = Form(...),
+    description: str = Form(...),
+    image: UploadFile = File(...)
+    ):
+    try:
+        img = Image.open(image.file)
+        img.verify()  # 이미지 파일인지 확인
+    except (IOError, SyntaxError) as e:
+        raise HTTPException(status_code=400, detail="Uploaded file is not a valid image")
+    
+    구현 ㄱㄱㄱ utils파일 함수 이름 변경 ㄱ
+
+
+
+
 
 
 @app.get("/video")
