@@ -1,5 +1,7 @@
 from fastapi import Request,HTTPException
 from fastapi.responses import StreamingResponse
+
+from app.src.middleware.utils import change_file_name
 from jobs.predict import *
 from app.src.middleware.settings import *
 from starlette.responses import RedirectResponse
@@ -7,8 +9,10 @@ import uvicorn
 import threading
 from dataset.schema import *
 from middleware.settings import *
-from dataset.database import *
+
+
 from fastapi import FastAPI, File, UploadFile, Form
+from app.src.middleware.settings import *
 
 
 @app.get('/')
@@ -42,8 +46,8 @@ async def auth(request: Request):
 
 
 @app.get("/criminal")
-async def criminal():
-    pass
+async def criminal(request: Request):
+    return templates.TemplateResponse('add.html',{'request':request})
 
 @app.post("/criminal/add")
 async def add_criminal(
@@ -56,10 +60,22 @@ async def add_criminal(
     try:
         img = Image.open(image.file)
         img.verify()  # 이미지 파일인지 확인
+        image.file.seek(0)
+        path=change_file_name(image=image)
+        try:
+            db.add(CriminalDao(name=name, age=age, gender=gender, description=description, image=path))
+            db.commit()
+        except:
+            db.rollback()  # 오류 발생 시 롤백
+            raise
+        # finally:
+        #     db.close()  # 세션 닫기
+
     except (IOError, SyntaxError) as e:
-        raise HTTPException(status_code=400, detail="Uploaded file is not a valid image")
-    
-    구현 ㄱㄱㄱ utils파일 함수 이름 변경 ㄱ
+        raise HTTPException(status_code=400, detail=f"Uploaded file is not a valid image and {e.error}")
+
+    return RedirectResponse('/criminal')
+
 
 
 

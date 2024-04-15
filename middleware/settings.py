@@ -37,10 +37,10 @@ engine = create_engine(URL,encoding='utf8')
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
-session = Session()
-session=session.query(CriminalDao)
+db = Session()
+query=db.query(CriminalDao)
 
-criminals=session.all()
+criminals=query.all()
 
 
 known_faces = load_known_faces(criminals)
