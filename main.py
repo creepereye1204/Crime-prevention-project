@@ -1,3 +1,5 @@
+import copy
+
 from fastapi import Request,HTTPException
 from fastapi.responses import StreamingResponse
 
@@ -9,6 +11,7 @@ import uvicorn
 import threading
 from dataset.schema import *
 from middleware.settings import *
+from app.src.middleware import settings
 
 
 from fastapi import FastAPI, File, UploadFile, Form
@@ -65,6 +68,8 @@ async def add_criminal(
         try:
             db.add(CriminalDao(name=name, age=age, gender=gender, description=description, image=path))
             db.commit()
+            settings.known_faces.append(Criminal(name=name, age=age, gender=gender, description=description, image=path))
+            settings.shared_known_faces=[copy.deepcopy(t) for t in settings.known_faces]
         except:
             db.rollback()  # 오류 발생 시 롤백
             raise
@@ -95,5 +100,3 @@ async def stream():
 if __name__ == '__main__':
     threading.Thread(target=recognize_faces_in_video, daemon=True).start()
     uvicorn.run("main:app", port=5000)
-
-

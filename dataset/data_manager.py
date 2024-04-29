@@ -1,9 +1,9 @@
 
 from app.src.models.models import *
-from app.src.middleware.settings import *
+
 from app.src.models.database import *
 from app.src.dataset.schema import *
-from pydantic import parse_obj_as
+
 
 def load_known_faces(criminals):
 

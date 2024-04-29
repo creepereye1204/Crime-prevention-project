@@ -44,3 +44,4 @@ criminals=query.all()
 
 
 known_faces = load_known_faces(criminals)
+shared_known_faces = load_known_faces(criminals)

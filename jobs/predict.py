@@ -1,5 +1,6 @@
 from app.src.models.models import *
 from app.src.middleware.settings import *
+from app.src.middleware import settings
 import time
 import cv2
 import threading
@@ -11,7 +12,7 @@ frame_lock = threading.Lock()
 def recognize_faces_in_video():
     global latest_frame
     # 웹캠에서 영상을 읽어오기
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('http://192.168.45.165:4747/video')
     while cap.isOpened():
         success, image = cap.read()
         image=cv2.flip(image,1)
@@ -29,12 +30,12 @@ def recognize_faces_in_video():
                 current_face_encoding = resnet(face.unsqueeze(0).to(device))
 
                 # 가장 작은 거리 찾기
-                distances = [(current_face_encoding - known_face.encoding).norm().item() for known_face in known_faces]
+                distances = [(current_face_encoding - known_face.encoding).norm().item() for known_face in settings.shared_known_faces]
                 min_distance = min(distances)
                 name_index = distances.index(min_distance)
 
                 if min_distance < 1:  # 예시 임계값
-                    name = known_faces[name_index].name
+                    name = settings.shared_known_faces[name_index].name
                     # age = known_faces[name_index].age
                     # gender = known_faces[name_index].gender
                     # description = known_faces[name_index].description
