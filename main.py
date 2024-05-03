@@ -99,4 +99,4 @@ async def stream():
 
 if __name__ == '__main__':
     threading.Thread(target=recognize_faces_in_video, daemon=True).start()
-    uvicorn.run("main:app", port=5000)
+    uvicorn.run("main:app",port=5000)
