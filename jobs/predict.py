@@ -58,7 +58,7 @@ def recognize_faces_in_video():
 
 def generate_frames():
     while True:
-        time.sleep(0.3)
+        time.sleep(0.1)
         with frame_lock:
             if latest_frame is not None:
                 ret, jpeg = cv2.imencode('.jpg', latest_frame)

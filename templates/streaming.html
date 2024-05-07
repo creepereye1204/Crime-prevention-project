@@ -9,12 +9,30 @@
     <link rel="stylesheet" href="/static/css/streaming.css">
 </head>
 <body>
-    <h1>웹캠 스트리밍 예제</h1>
-    <div class="video-container">
-        <img src="/video/stream" width="640" height="480" alt="웹캠 스트리밍">
-    </div>
+    <h1>CCTV</h1>
+    <div class="video-container" id="videoContainer"></div>
 
-    <!-- Bootstrap JS, Popper.js, and jQuery 추가 (필요한 경우) -->
+
+<script>
+  window.onload = function() {
+    // videoContainer div를 찾습니다.
+    var videoContainer = document.getElementById('videoContainer');
+
+    // 새로운 img 요소를 생성합니다.
+    var videoStreamImg = document.createElement('img');
+    videoStreamImg.id = 'videoStream';
+    videoStreamImg.width = 640;
+    videoStreamImg.height = 480;
+    videoStreamImg.alt = '웹캠 스트리밍';
+
+    // img 요소의 src 속성을 설정하여 스트리밍을 시작합니다.
+    videoStreamImg.src = '/video/stream';
+
+    // 생성한 img 요소를 videoContainer div 안에 추가합니다.
+    videoContainer.appendChild(videoStreamImg);
+  }
+</script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

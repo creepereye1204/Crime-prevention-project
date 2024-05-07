@@ -89,10 +89,12 @@ async def add_criminal(
 
 @app.get("/video")
 async def video(request: Request):
+
     return templates.TemplateResponse("streaming.html", {"request": request})
 
 @app.get("/video/stream")
 async def stream():
+
     return StreamingResponse(generate_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 
