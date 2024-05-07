@@ -12,7 +12,7 @@ frame_lock = threading.Lock()
 def recognize_faces_in_video():
     global latest_frame
     # 웹캠에서 영상을 읽어오기
-    cap = cv2.VideoCapture('http://192.168.45.165:4747/video')
+    cap = cv2.VideoCapture(0)
     while cap.isOpened():
         success, image = cap.read()
         image=cv2.flip(image,1)
