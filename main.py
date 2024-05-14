@@ -62,7 +62,7 @@ async def add_criminal(
     ):
     try:
         img = Image.open(image.file)
-        img.verify()  # 이미지 파일인지 확인
+        img.verify()  
         image.file.seek(0)
         path=change_file_name(image=image)
         try:
@@ -71,10 +71,10 @@ async def add_criminal(
             settings.known_faces.append(Criminal(name=name, age=age, gender=gender, description=description, image=path))
             settings.shared_known_faces=[copy.deepcopy(t) for t in settings.known_faces]
         except:
-            db.rollback()  # 오류 발생 시 롤백
+            db.rollback()  
             raise
         # finally:
-        #     db.close()  # 세션 닫기
+        #     db.close()  
 
     except (IOError, SyntaxError) as e:
         raise HTTPException(status_code=400, detail=f"Uploaded file is not a valid image and {e.error}")
