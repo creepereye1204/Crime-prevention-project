@@ -14,7 +14,7 @@ from app.src.models.database import *
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
-
+# google login 성공 토큰을 받을 URI
 oauth=OAuth()
 oauth.register(
     name='google',
