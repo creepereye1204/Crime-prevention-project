@@ -18,7 +18,7 @@ class Criminal():
         face_encoding = mtcnn(img).to(device)
         face_encoding = resnet(face_encoding).to(device)
         return face_encoding
-
+    # 오버라이딩
     def __deepcopy__(self, memo):
        
         copied_tensor = self.encoding.clone().detach()
