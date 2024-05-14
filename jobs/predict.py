@@ -11,7 +11,7 @@ frame_lock = threading.Lock()
 
 def recognize_faces_in_video():
     global latest_frame
-    # 웹캠에서 영상을 읽어오기
+ 
     cap = cv2.VideoCapture(0)
     while cap.isOpened():
         success, image = cap.read()
@@ -29,20 +29,20 @@ def recognize_faces_in_video():
                 x, y, w, h = box.astype(int)
                 current_face_encoding = resnet(face.unsqueeze(0).to(device))
 
-                # 가장 작은 거리 찾기
+              
                 distances = [(current_face_encoding - known_face.encoding).norm().item() for known_face in settings.shared_known_faces]
                 min_distance = min(distances)
                 name_index = distances.index(min_distance)
 
-                if min_distance < 1:  # 예시 임계값
+                if min_distance < 1: 
                     name = settings.shared_known_faces[name_index].name
                     # age = known_faces[name_index].age
                     # gender = known_faces[name_index].gender
                     # description = known_faces[name_index].description
-                    color = (0, 255, 0)  # 초록색
+                    color = (0, 255, 0)  
                 else:
                     name = "Unknown"
-                    color = (0, 0, 255)  # 빨간색
+                    color = (0, 0, 255)  
 
                 cv2.rectangle(image, (x, y), (w, h), color, 2)
                 cv2.putText(image, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
