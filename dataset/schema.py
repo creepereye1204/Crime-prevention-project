@@ -20,9 +20,8 @@ class Criminal():
         return face_encoding
 
     def __deepcopy__(self, memo):
-        # 텐서의 경우, clone() 메서드를 사용하여 복사하고, detach()로 계산 그래프에서 분리합니다.
-        # 필요한 경우, .to() 메서드를 사용하여 원하는 디바이스로 텐서를 옮길 수도 있습니다.
+       
         copied_tensor = self.encoding.clone().detach()
-        # 새로운 인스턴스를 생성하여 복사된 텐서를 할당합니다.
+
         new_instance = Criminal(self.name, self.age, self.gender, self.description, self.image, self.encoding)
         return new_instance
