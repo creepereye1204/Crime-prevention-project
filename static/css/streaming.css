@@ -1,17 +1,17 @@
 body {
-    background-color: #f8f9fa; /* 배경색 변경 */
+    background-color: #f8f9fa; 
 }
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #495057; /* 제목 색상 변경 */
+    color: #495057; 
 }
 .video-container {
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
+    justify-content: center; 
     margin-top: 20px;
 }
 img {
-    border-radius: 8px; /* 이미지 모서리 둥글게 */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 효과 */
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
 }
