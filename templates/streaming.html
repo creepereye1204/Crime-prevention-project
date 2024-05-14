@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>웹캠 스트리밍</title>
-    <!-- Bootstrap CSS 추가 -->
+   
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- 외부 CSS 파일 참조 -->
+    
     <link rel="stylesheet" href="/static/css/streaming.css">
 </head>
 <body>
@@ -15,20 +15,20 @@
 
 <script>
   window.onload = function() {
-    // videoContainer div를 찾습니다.
+    
     var videoContainer = document.getElementById('videoContainer');
 
-    // 새로운 img 요소를 생성합니다.
+    
     var videoStreamImg = document.createElement('img');
     videoStreamImg.id = 'videoStream';
     videoStreamImg.width = 640;
     videoStreamImg.height = 480;
     videoStreamImg.alt = '웹캠 스트리밍';
 
-    // img 요소의 src 속성을 설정하여 스트리밍을 시작합니다.
+    
     videoStreamImg.src = '/video/stream';
 
-    // 생성한 img 요소를 videoContainer div 안에 추가합니다.
+    
     videoContainer.appendChild(videoStreamImg);
   }
 </script>
